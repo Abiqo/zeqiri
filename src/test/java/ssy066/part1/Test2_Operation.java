@@ -131,7 +131,13 @@ public class Test2_Operation extends TestCase {
 	 * 
 	 */
 	public void test5_writingPredicates() {
-        Predicate p1 = new TrueGuard();
+        Predicate pp1 = new EQ(v1, 0);
+        Predicate pp2 = new EQ(v2, true);
+        Predicate pp3 = new EQ(v3, "Running");
+
+        Predicate OR1 = new AND(pp1, new NOT(pp2));
+        Predicate AND1 = new OR(pp3, pp2);
+        Predicate p1 = new OR(OR1, AND1);
 
 		System.out.println("test5: predicate "+p1);
 		assertTrue("v1 = 0 AND NOT v2 = true OR v3 = Running OR v2 = true".equals(p1.toString().replace("(","").replace(")","")));
@@ -149,7 +155,7 @@ public class Test2_Operation extends TestCase {
 		Action a2 = new Next(v2, true);
 
 
-        State nextState = a1.next(testState);
+		State nextState = a1.next(testState);
         State s2 = a2.next(nextState);
 		assertTrue(s2.get(v1).equals(1) && s2.get(v2).equals(true) && s2.get(v3).equals("Initial"));
 	}
@@ -162,7 +168,7 @@ public class Test2_Operation extends TestCase {
 		Action a1 = new Assign(v1, v2);
 		
 		State nextState = a1.next(testState);
-		
+
 		assertTrue(nextState.get(v1).equals(false) && nextState.get(v2).equals(false) && nextState.get(v3).equals("Initial"));
 	}
 	

@@ -16,7 +16,7 @@ public class Next implements Action {
 	}
 
 	public State next(State s) {
-        throw new NotImplementedException();
+	    return s.newState(this.v, this.nextValue);
 	}
 
 	@Override

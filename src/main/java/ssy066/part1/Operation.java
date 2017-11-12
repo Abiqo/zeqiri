@@ -24,7 +24,7 @@ public class Operation {
 	 * @return If the operation is allowed to start
 	 */
 	public boolean eval(State s) {
-		throw new NotImplementedException();
+		return guard.eval(s);
 	}
 
 	/**
@@ -34,7 +34,14 @@ public class Operation {
 	 * @return the updated state, or throw IllegalStateException if the operation evaluates to false.
 	 */
 	public State execute(State s) {
-		throw new NotImplementedException();
+		if(guard.eval(s)){
+
+			for(int i = 0; i<actions.size(); i++) {
+				s = actions.get(i).next(s);
+			}
+			return s;
+		}
+		throw new IllegalStateException();
 	}
 
     /**

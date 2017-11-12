@@ -33,10 +33,9 @@ public class EQ implements Predicate {
 	 * returns true if they are equal
 	 */
 	public boolean eval(State s) {
-		throw new NotImplementedException();
+		return s.get(v).equals(value);
 
 	}
-
 	@Override
 	public String toString() {
 		return v + " = " + value.toString();

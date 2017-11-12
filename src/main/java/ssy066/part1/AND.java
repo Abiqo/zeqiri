@@ -24,7 +24,10 @@ public class AND implements Predicate {
 	 * This method should implement the AND evaluation.
 	 */
 	public boolean eval(State s) {
-        throw new NotImplementedException();
+        if(x.eval(s) && y.eval(s)){
+            return true;
+        }
+        return false;
 	}
 	
 	@Override

@@ -25,8 +25,10 @@ public class State {
      *
      * @param init Each variable
      */
+
+
 	public State(Map<String, Object> init) {
-        throw new NotImplementedException();
+	    state= new HashMap<>(init);
 	}
 
     /**
@@ -37,8 +39,9 @@ public class State {
      * @param var The variable name
      * @return the value of the variable named var
      */
-	public Object get(String var) {
-        throw new NotImplementedException();
+	public Object get(String var){
+        inState(var);
+        return state.get(var);
 	}
 
     /**
@@ -49,7 +52,19 @@ public class State {
      * @return a new State
      */
 	public State newState(String var, Object value) {
-        throw new NotImplementedException();
+        inState(var);
+	    Map<String, Object> map = new HashMap<>(state);
+        map.put(var, value);
+        State newState = new State(map);
+
+	    return newState;
+
+	    /*Map<String, Object> stateMap1 = new HashMap<String, Object>();
+        stateMap1.put(var, value);
+        State state1 = new State(stateMap1);
+        state1.inState(var);
+        return state1;
+        */
 	}
 
     /**
@@ -59,7 +74,15 @@ public class State {
      * @return a new State
      */
 	public State newState(Map<String, Object> updVars) {
-        throw new NotImplementedException();
+        Map<String, Object> newmap = new HashMap<>(state);
+        for(String key : updVars.keySet())
+        {
+            inState(key);
+
+            newmap.put(key, updVars.get(key));
+
+        }
+        return new State(newmap);
 	}
 
 

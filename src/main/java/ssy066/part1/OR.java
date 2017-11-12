@@ -22,7 +22,10 @@ public class OR implements Predicate {
 	 * This method should implement the OR evaluation.
 	 */
 	public boolean eval(State s) {
-        throw new NotImplementedException();
+        if(x.eval(s) || y.eval(s)){
+            return true;
+        }
+        return false;
 
 	}
 	

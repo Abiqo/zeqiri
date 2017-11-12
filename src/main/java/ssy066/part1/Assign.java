@@ -17,7 +17,8 @@ public class Assign implements Action {
 	}
 
 	public State next(State s) {
-        throw new NotImplementedException();
+        Object othervalue = s.get(otherVar);
+        return s.newState(v, othervalue);
 	}
 
 	@Override
