@@ -21,7 +21,13 @@ public class GraphFactory {
      * @return
      */
     public static HashSet<Operation> enabledOperations(Set<Operation> ops, State s) {
-        throw new NotImplementedException();
+        HashSet<Operation> enabled= new HashSet<>();
+
+        for(Operation o: ops){
+            if(o.eval(s))
+                enabled.add(o);
+        }
+        return enabled;
     }
 
     /**
@@ -33,7 +39,15 @@ public class GraphFactory {
      * @return All outgoing transitions
      */
     public static HashSet<Transition> makeTransitions(Set<Operation> ops, State tail){
-        throw new NotImplementedException();
+        HashSet<Transition> transitions = new HashSet<>();
+        HashSet<Operation> enabledOps = enabledOperations(ops, tail);
+        Transition transition;
+        for(Operation o: enabledOps){
+            transition = new Transition(o.name, tail, o.execute(tail), o.cost());
+            transitions.add(transition);
+        }
+        return  transitions;
+
     }
 
     /**
@@ -46,7 +60,33 @@ public class GraphFactory {
      * @return The graph
      */
 	public static Graph makeMeAGraph(Set<Operation> operations, State init){
-	    throw new NotImplementedException();
+        ArrayDeque<State> stateList = new ArrayDeque<>();
+
+        State q;
+        stateList.addFirst(init);
+        HashSet<Operation> enabledOps;
+        HashSet<State> visited = new HashSet<>();
+        HashSet<Transition> transitions = new HashSet<>();
+        HashSet<Transition> allTransitions = new HashSet<>();
+        while (!stateList.isEmpty()) {
+
+            q = stateList.removeLast();
+
+            if (!visited.contains(q)) {
+                visited.add(q);
+                enabledOps = enabledOperations(operations, q);
+                transitions = makeTransitions(enabledOps, q);
+                for (Transition t : transitions) {
+                    stateList.addFirst(t.head);
+                }
+                allTransitions.addAll(transitions);
+            }
+        }
+
+        return new GraphClass(init, visited, allTransitions);
+
+
+
     }
 
 

@@ -182,12 +182,12 @@ public class Test3_Graphs extends TestCase {
         g = GraphFactory.makeMeAGraph(o1o2, testState);
         Set<State> result = g.getStates();
 
+
         // below is created to test the result.
         Set<State> compare = new HashSet<State>();
         compare.add(testState);
         compare.add(testState.newState(v1, 1));
         compare.add(testState.newState(v1, 2));
-
         assertTrue(result.equals(compare));
     }
 
